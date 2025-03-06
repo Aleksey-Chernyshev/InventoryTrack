@@ -1,62 +1,31 @@
-import axios from "axios"
-import React, { ChangeEvent, FormEvent, Fragment, useState} from "react"
-import { AuthPageProps } from "./LoginPage.interface"
-import { Link } from "react-router-dom"
+import React, { Fragment, useState } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import InputFormAuth from '../../shared/InputFormAuth/InputFormAuth';
+
 import styles from './LoginPage.module.css'
-//import AuthURL from "../../configs/auth_urls"
-import { UserService } from "../../services/user.service"
-import InputFormAuth from "../../shared/InputFormAuth/InputFormAuth"
+import { useAuth } from '../../hooks/useAuth';
 
-// import { toast } from "react-toastify"
+interface Props {
+  setAuth: (boolean: boolean, userRole: string | null) => void;
+}
 
-function LoginPage({setAuth}:AuthPageProps){
+const LoginPage: React.FC<Props> = ({ setAuth }) => {
 
-    const [inputs, setInputs] = useState({
-        email:"",
-        password:""
-    })
+  const {email, setEmail, password, setPassword, handleLogin} = useAuth(setAuth)
 
-    const {email,password} = inputs
-
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setInputs({...inputs, [e.target.name] : e.target.value})
-    }
-
-    const onSubmitForm = async (e: FormEvent) => {
-        e.preventDefault()
-        try {
-            const body = {email, password}
-            // const response = await axios.post(AuthURL.LOGIN_URL, body);
-            const response = await UserService.LoginUser(body)
-            if (response.data.token){
-                localStorage.setItem("token", response.data.token)
-                setAuth(true)
-                //toast.success("login successfully!")
-            } else {
-                setAuth(false)
-                //toast.error(response.data)
-            }
-            
-        } catch (err: unknown) {
-            if (err instanceof Error) {
-              console.error(err.message);
-              //toast.error("An error occurred during login. Please try again.")
-            } else {
-              console.error('An unknown error occurred', err);
-            }
-          }
-    }
-    return(
-        <Fragment>
+  return (
+    <Fragment>
             <div className={styles.login_container}>
                 <h1 className={styles.login_title}>Вход</h1>
-                <form onSubmit={onSubmitForm} className={styles.login_form}>
+                <form onSubmit={handleLogin} className={styles.login_form}>
                     <InputFormAuth 
                         type ="email"
                         name="email"
                         placeholder="Email"
                         value= {email}
-                        onChange={(e) => onChange(e)}
+                        onChange={e => setEmail(e.target.value)} 
+                        
                     />
                     
                     <InputFormAuth
@@ -64,7 +33,8 @@ function LoginPage({setAuth}:AuthPageProps){
                         name="password"
                         placeholder="Password"
                         value={password}
-                        onChange={(e) => onChange(e)}
+                        onChange={e => setPassword(e.target.value)} 
+                        
                     />
                     <button className={styles.btn_submit}>Войти</button>
                 </form>
@@ -73,6 +43,7 @@ function LoginPage({setAuth}:AuthPageProps){
                 </div>
                 </div>
         </Fragment>
-    )
-}
-export default LoginPage
+  );
+};
+
+export default LoginPage;

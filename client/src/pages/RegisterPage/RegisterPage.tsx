@@ -1,56 +1,30 @@
-import React, { ChangeEvent, FormEvent, Fragment, useState } from "react"
-import axios from 'axios'
-import { Link } from "react-router-dom"
-import { AuthPageProps } from "../LoginPage/LoginPage.interface"
+import React, { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
+import InputFormAuth from '../../shared/InputFormAuth/InputFormAuth';
+
 import styles from '../LoginPage/LoginPage.module.css'
-import AuthURL from "../../configs/auth_urls"
-import InputFormAuth from "../../shared/InputFormAuth/InputFormAuth"
-import { UserService } from "../../services/user.service"
+import { useRegister } from '../../hooks/useRegister';
 
-const RegisterPage = ({setAuth}: AuthPageProps) => {
+interface Props {
+  setAuth: (boolean: boolean, userRole: string | null) => void;
+}
 
-    const [inputs, setInputs] = useState({
-        email:"",
-        password:"",
-        name:""
-    })
+const RegisterPage: React.FC<Props> = ({ setAuth }) => {
 
-    const {email, password, name} = inputs
+const {name, setName, email, setEmail, password, setPassword, handleRegister} = useRegister(setAuth)
 
-    const onChange = (e: ChangeEvent<HTMLInputElement>) =>{
-        setInputs({...inputs, [e.target.name] : e.target.value })
-    }
- 
-    const onSubmitForm = async (e: FormEvent) => {
-        e.preventDefault()
-        try {
-            const body = {name, email, password}
-            const response = await UserService.RegisterUser(body)
-            console.log(response.data);
+  return (
 
-            localStorage.setItem('token', response.data.token)
-            setAuth(true)
-        } catch (err: unknown) {
-            if (err instanceof Error) {
-              console.error(err.message);
-              //toast.error("An error occurred during login. Please try again.")
-            } else {
-              console.error('An unknown error occurred', err);
-            }
-          }
-    }
-
-    return(
-        <Fragment>
+    <Fragment>
             <div className={styles.login_container}>
                 <h1 className={styles.login_title}>Регистрация</h1>
-                <form onSubmit={onSubmitForm} className={styles.login_form}>
+                <form onSubmit={handleRegister} className={styles.login_form}>
                     <InputFormAuth 
                         type ="email"
                         name="email"
                         placeholder="Email"
                         value= {email}
-                        onChange={(e) => onChange(e)}
+                        onChange={e => setEmail(e.target.value)}
                     />
                         
                     <InputFormAuth
@@ -58,7 +32,7 @@ const RegisterPage = ({setAuth}: AuthPageProps) => {
                         name="password"
                         placeholder="Password"
                         value={password}
-                        onChange={(e) => onChange(e)}
+                        onChange={e => setPassword(e.target.value)}
                     />
 
                     <InputFormAuth 
@@ -66,7 +40,7 @@ const RegisterPage = ({setAuth}: AuthPageProps) => {
                         name="name" 
                         placeholder="Name"
                         value={name}
-                        onChange={e => onChange(e)}
+                        onChange={e => setName(e.target.value)}
                     />
                     
                     <button
@@ -79,6 +53,7 @@ const RegisterPage = ({setAuth}: AuthPageProps) => {
                 </div>
             </div>
         </Fragment>
-    )
-}
-export default RegisterPage
+  );
+};
+
+export default RegisterPage;

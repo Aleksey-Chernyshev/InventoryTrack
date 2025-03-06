@@ -1,22 +1,22 @@
-const jwt = require("jsonwebtoken")
-require("dotenv").config()
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-module.exports = function (req, res, next) {
-    const jwtToken = req.header("token");
+module.exports = (req, res, next) => {
+    try {
+        const token = req.header("Authorization")?.split(" ")[1]; // <-- Разбираем "Bearer TOKEN"
+        console.log("Полученный токен:", token); // <-- Выводим токен в консоль
 
-  // Check if not token
-  if (!jwtToken) {
-    return res.status(403).json("Not authorize");
-  }
+        if (!token) {
+            return res.status(403).json({ message: "Нет доступа, токен отсутствует" });
+        }
 
-  // Verify token
-  try {
-    //it is going to give use the user id (user:{id: user.id})
-    const payload = jwt.verify(jwtToken, process.env.jwtSecret);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded.user;
+        console.log("Расшифрованный токен:", req.user); // Проверяем, что там есть name
+        next();
+    } catch (err) {
+        console.error("Ошибка авторизации:", err.message);
+        return res.status(403).json({ message: "Токен недействителен" });
+    }
+};
 
-    req.user = payload.user;
-    next();
-  } catch (err) { 
-    return res.status(403).json("Not authorize");
-  }
-}

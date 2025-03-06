@@ -1,12 +1,12 @@
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
+const jwt = require("jsonwebtoken");
+require('dotenv').config(); // Убедись, что переменные окружения загружены
 
-
-function jwtGenerator(user_id) {
+const jwtGenerator = ({ id, name, role }) => {
     const payload = {
-        user: user_id
-    }
-    return jwt.sign(payload, process.env.jwtSecret, {expiresIn: "1hr"})
-}
+        user: { id, name, role }
+    };
 
-module.exports = jwtGenerator
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+};
+
+module.exports = jwtGenerator;

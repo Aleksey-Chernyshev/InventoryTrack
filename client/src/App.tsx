@@ -1,61 +1,94 @@
-import React, {Fragment, useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import{BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from "react-router-dom";
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
-import AuthURL from './configs/auth_urls';
+import AdminPage from './pages/AdminPage/AdminPage';
+import Sidebar from './components/layout/sidebar/Sidebar';
 
 
 
+const AuthURL = {
+  IS_VERIFY_URL: "http://localhost:5000/api/auth/is-verify",
+  DASHBOARD_URL: "http://localhost:5000/api/dashboard"
+};
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [role, setRole] = useState<string | null>(null);
 
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
-  const setAuth = (boolean:boolean) => {
-    setIsAuthenticated(boolean)
-  }
+  const setAuth = (boolean: boolean, userRole: string | null = null) => {
+    setIsAuthenticated(boolean);
+    setRole(userRole);
+  };
 
-  async function isAuth() {
-    try {
-      const response = await axios.get<boolean>(AuthURL.IS_VERIFY_URL, {headers:{token: localStorage.token}})
-      console.log(response.data)
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    async function isAuth() {
+      
+        try {
+            
+            if (!token) {
+                setAuth(false, null);
+                return;
+            }
 
-      response.data === true ? setIsAuthenticated(true) : setIsAuthenticated(false) 
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error(err.message);
-        //toast.error("An error occurred during login. Please try again.")
-      } else {
-        console.error('An unknown error occurred', err);
-      }
+            const response = await axios.get(AuthURL.IS_VERIFY_URL, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (response.data) {
+                setAuth(true, response.data.role);
+                localStorage.setItem("role", response.data.role);
+            } else {
+                setAuth(false, null);
+                localStorage.removeItem("role");
+            }
+        } catch (err) {
+            console.error("Ошибка при проверке аутентификации:", err);
+            setAuth(false, null);
+            localStorage.removeItem("role");
+        }
     }
-  }
-  useEffect(()=>{
-    isAuth()
-  },[])
+
+    const savedRole = localStorage.getItem("role");
+    if (savedRole && token) {
+        setAuth(true, savedRole); // 💾 Берем роль из localStorage сразу
+    } else {
+        isAuth();
+    }
+}, []);
+
+
+  // Пустой массив зависимостей для первого рендера
+  
   return (
-    <Fragment>
-      <Router>
-        <div className='container'>
-          <Routes>
-            <Route 
-              path='/login' 
-              element={!isAuthenticated ?   <LoginPage setAuth={setAuth} />  : <Navigate to="/dashboard" />} 
-            />
-            <Route 
-              path='/register' 
-              element={!isAuthenticated ?  <RegisterPage setAuth={setAuth}/> : <Navigate to="/login" />} 
-            />
-            <Route
-             path='/dashboard'
-             element={isAuthenticated ?  <DashboardPage setAuth={setAuth}/> : <Navigate to="/login" />} 
-            />
-          </Routes>
-        </div>
-      </Router>
-    </Fragment>
+    <Router>
+      <div className="container">
+        {/* {isAuthenticated && (
+          <nav>
+            <Link to="/dashboard">Dashboard</Link>
+            {role === "admin" && <Link to="/admin">Admin Panel</Link>}
+          </nav>
+        )} */}
+        
+        <Routes>
+          
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path='/login' element={!isAuthenticated ? <LoginPage setAuth={setAuth} /> : <Navigate to="/dashboard" />} />
+          <Route path='/register' element={!isAuthenticated ? <RegisterPage setAuth={setAuth} /> : <Navigate to="/dashboard" />} />
+          <Route path='/dashboard' element={isAuthenticated ? <DashboardPage setAuth={setAuth} /> : <Navigate to="/login" />} />
+          <Route 
+              path='/admin' 
+              element={isAuthenticated && role === "admin" 
+                ? <AdminPage /> 
+                : (console.log("Переход на админ панель заблокирован. Роль:", role), <Navigate to="/dashboard" />)} 
+          />
+        </Routes>
+        
+      </div>
+    </Router>
   );
 }
 

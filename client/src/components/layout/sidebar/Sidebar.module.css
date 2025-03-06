@@ -1,0 +1,74 @@
+/* Sidebar.css */
+.sidebar {
+	position: relative;
+	z-index: 10;
+	flex-shrink: 0;
+	width: 256px; /* Открытый сайдбар */
+	transition: width 0.3s ease-in-out;
+}
+
+.sidebar.closed {
+	width: 80px; /* Закрытый сайдбар */
+}
+
+.sidebar_container {
+	height: 100%;
+	background-color: rgba(31, 41, 55, 0.5); /* bg-gray-800 bg-opacity-50 */
+	backdrop-filter: blur(8px);
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	border-right: 1px solid #374151; /* border-gray-700 */
+}
+
+/* Кнопка меню */
+.menu_button {
+	padding: 0.5rem;
+	border-radius: 9999px;
+	transition: background-color 0.3s, transform 0.1s;
+	max-width: fit-content;
+	cursor: pointer;
+}
+
+.menu_button:hover {
+	background-color: #374151;
+}
+
+.menu_button:active {
+	transform: scale(0.9); /* Эффект нажатия */
+}
+
+/* Навигация */
+.sidebar_nav {
+	margin-top: 2rem;
+	flex-grow: 1;
+}
+
+.sidebar_item {
+	display: flex;
+	align-items: center;
+	padding: 1rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	border-radius: 0.5rem;
+	transition: background-color 0.3s;
+	margin-bottom: 0.5rem;
+}
+
+.sidebar_item:hover {
+	background-color: #374151;
+}
+
+/* Текст внутри Sidebar */
+.sidebar_text {
+	margin-left: 1rem;
+	white-space: nowrap;
+	overflow: hidden;
+	opacity: 1;
+	transition: opacity 0.3s, width 0.3s;
+}
+
+.closed .sidebar_text {
+	opacity: 0;
+	width: 0;
+}

@@ -1,42 +1,51 @@
-import axios from "axios"
-import React, { Fragment, useState, useEffect } from "react"
-import { AuthPageProps } from "../LoginPage/LoginPage.interface"
+import React, { Fragment} from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import { useDashboard } from '../../hooks/useDashboard'
 
-function DashboardPage({setAuth}: AuthPageProps){
-    const [name, setName] = useState("")
+interface Props {
+  setAuth: (boolean: boolean, userRole: string | null) => void
+}
 
-    async function getName() {
-        try {
-            const response = await axios.get("http://localhost:8000/dashboard/",{headers:{token: localStorage.token}})
-            setName(response.data.user_name)
-        } catch (err: unknown) {
-            if (err instanceof Error) {
-              console.error(err.message);
-              //toast.error("An error occurred during login. Please try again.")
-            } else {
-              console.error('An unknown error occurred', err);
-            }
-          }
-    }
+const DashboardPage: React.FC<Props> = ({ setAuth }) => {
 
-    const logout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault()
-        localStorage.removeItem("token")
-        setAuth(false)
-    }
+  const {userName, role, error} = useDashboard(setAuth)
+  const navigate = useNavigate()
 
-    useEffect(() => {
-        getName()
-    },[])
-    return(
-        <Fragment>
-            <h1>Dashboard {name}</h1>
-            <button
-                className="btn btn-primary"
-                onClick={e => logout(e)}
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    setAuth(false, null)
+    navigate('/login')
+  };
+
+  if (error) {
+    return <div>Ошибка при загрузке данных. Пожалуйста, попробуйте снова.</div>
+  }
+
+  if (!userName) {
+    return <div>Загрузка...</div>
+  }
+
+  return (
+
+    <Fragment>
+    
+      <div>
+       <h1>Добро пожаловать, {userName}!</h1>
+       <p>Ваша роль: {role}</p>
+        {role && role === "admin" ? (
+          <button onClick={() => navigate("/admin")}>Перейти в Админ-панель</button> ) : null}
+
+       
+      </div>
+            
+      <button
+        className="btn btn-primary"
+        onClick={logout}
             >Log out</button>
 
-        </Fragment>
-    )
-}
+    </Fragment>
+  );
+};
+
 export default DashboardPage

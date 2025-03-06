@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8000/auth'
+const API_URL = 'http://localhost:5000/api/auth'
 const IS_VERIFY_URL = `${API_URL}/is-verify`
 const LOGIN_URL = `${API_URL}/login`
 const REGISTER_URL = `${API_URL}/register`
