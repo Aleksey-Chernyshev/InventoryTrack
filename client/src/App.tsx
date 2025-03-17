@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import AdminPage from './pages/AdminPage/AdminPage';
+import UsersPage from './pages/UsersPage/UsersPage'
 import Sidebar from './components/layout/sidebar/Sidebar';
 
 
@@ -66,25 +67,23 @@ function App() {
   return (
     <Router>
       <div className="container">
-        {/* {isAuthenticated && (
-          <nav>
-            <Link to="/dashboard">Dashboard</Link>
-            {role === "admin" && <Link to="/admin">Admin Panel</Link>}
-          </nav>
+       
+      {/* {isAuthenticated && (
+          <Sidebar setAuth={setAuth} role={role} />
         )} */}
-        
         <Routes>
           
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path='/login' element={!isAuthenticated ? <LoginPage setAuth={setAuth} /> : <Navigate to="/dashboard" />} />
           <Route path='/register' element={!isAuthenticated ? <RegisterPage setAuth={setAuth} /> : <Navigate to="/dashboard" />} />
-          <Route path='/dashboard' element={isAuthenticated ? <DashboardPage setAuth={setAuth} /> : <Navigate to="/login" />} />
-          <Route 
-              path='/admin' 
+          <Route path='/dashboard/*' element={isAuthenticated ? <DashboardPage setAuth={setAuth} role={role} /> : <Navigate to="/login" />} />
+          {/* <Route 
+              path='/dashboard/admin' 
               element={isAuthenticated && role === "admin" 
                 ? <AdminPage /> 
                 : (console.log("Переход на админ панель заблокирован. Роль:", role), <Navigate to="/dashboard" />)} 
-          />
+          /> */}
+          
         </Routes>
         
       </div>
