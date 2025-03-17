@@ -7,7 +7,7 @@
 	transition: width 0.3s ease-in-out;
 }
 
-.sidebar.closed {
+.closed {
 	width: 80px; /* Закрытый сайдбар */
 }
 

@@ -1,51 +1,32 @@
-import React, { Fragment} from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { useDashboard } from '../../hooks/useDashboard'
+import React, { Fragment } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Sidebar from '../../components/layout/sidebar/Sidebar';
+import UsersPage from '../UsersPage/UsersPage';
+import AdminPage from '../AdminPage/AdminPage';
+import style from './Dashboard.module.css';
 
 interface Props {
-  setAuth: (boolean: boolean, userRole: string | null) => void
+  setAuth: (boolean: boolean, userRole: string | null) => void;
+  role: string | null;
 }
 
-const DashboardPage: React.FC<Props> = ({ setAuth }) => {
-
-  const {userName, role, error} = useDashboard(setAuth)
-  const navigate = useNavigate()
-
-
-  const logout = () => {
-    localStorage.removeItem('token')
-    setAuth(false, null)
-    navigate('/login')
-  };
-
-  if (error) {
-    return <div>Ошибка при загрузке данных. Пожалуйста, попробуйте снова.</div>
-  }
-
-  if (!userName) {
-    return <div>Загрузка...</div>
-  }
-
+const DashboardPage: React.FC<Props> = ({ setAuth, role }) => {
   return (
-
     <Fragment>
-    
-      <div>
-       <h1>Добро пожаловать, {userName}!</h1>
-       <p>Ваша роль: {role}</p>
-        {role && role === "admin" ? (
-          <button onClick={() => navigate("/admin")}>Перейти в Админ-панель</button> ) : null}
-
-       
+      <div className={style.app_container}>
+        {/* Сайдбар будет отображаться всегда, если пользователь авторизован */}
+        <Sidebar setAuth={setAuth} role={role} />
+        <div className={style.content}>
+          <Routes>
+            <Route path="/" element={<div>Добро пожаловать на главную панель!</div>} />
+            <Route path="/users" element={<UsersPage />} />
+            <Route path="/admin" element={role === "admin" ? <AdminPage /> : <div>Доступ запрещен</div>} />
+            {/* Добавьте другие страницы */}
+          </Routes>
+        </div>
       </div>
-            
-      <button
-        className="btn btn-primary"
-        onClick={logout}
-            >Log out</button>
-
     </Fragment>
   );
 };
 
-export default DashboardPage
+export default DashboardPage;
