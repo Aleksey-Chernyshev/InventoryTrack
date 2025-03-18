@@ -1,13 +1,13 @@
 import React from 'react';
+import UsersTable from '../../components/screens/users/UsersTable';
 
 const UsersPage: React.FC = () => {
 
 
-    console.log("Вы находитесь на users странице");
-
     return (
         <div>
             <h1>users page</h1>
+            <UsersTable />
             
         </div>
     );

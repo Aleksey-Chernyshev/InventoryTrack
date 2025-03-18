@@ -14,14 +14,12 @@ const DashboardPage: React.FC<Props> = ({ setAuth, role }) => {
   return (
     <Fragment>
       <div className={style.app_container}>
-        {/* Сайдбар будет отображаться всегда, если пользователь авторизован */}
         <Sidebar setAuth={setAuth} role={role} />
         <div className={style.content}>
           <Routes>
             <Route path="/" element={<div>Добро пожаловать на главную панель!</div>} />
             <Route path="/users" element={<UsersPage />} />
             <Route path="/admin" element={role === "admin" ? <AdminPage /> : <div>Доступ запрещен</div>} />
-            {/* Добавьте другие страницы */}
           </Routes>
         </div>
       </div>

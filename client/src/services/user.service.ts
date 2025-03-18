@@ -1,5 +1,6 @@
 import axios from "axios"
 import AuthURL from "../configs/auth_urls"
+import DashboardURL from "../configs/dashboard_urls"
 
 interface IBodyProps{
     email: string,
@@ -32,5 +33,15 @@ export const UserService ={
             
         }
     },
+
+    async GetUsers(){
+        try {
+            const response = await axios.get("http://localhost:5000/api/dashboard/users")
+            return response.data
+        } catch (error) {
+            console.error("Неизвестная ошибка:", error);
+        }
+
+    }
     
 }

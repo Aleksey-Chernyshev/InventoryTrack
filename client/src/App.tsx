@@ -4,9 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Link } from "react-ro
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
-import AdminPage from './pages/AdminPage/AdminPage';
-import UsersPage from './pages/UsersPage/UsersPage'
-import Sidebar from './components/layout/sidebar/Sidebar';
+
 
 
 
@@ -55,22 +53,16 @@ function App() {
 
     const savedRole = localStorage.getItem("role");
     if (savedRole && token) {
-        setAuth(true, savedRole); // 💾 Берем роль из localStorage сразу
+        setAuth(true, savedRole); 
     } else {
         isAuth();
     }
 }, []);
 
-
-  // Пустой массив зависимостей для первого рендера
   
   return (
     <Router>
       <div className="container">
-       
-      {/* {isAuthenticated && (
-          <Sidebar setAuth={setAuth} role={role} />
-        )} */}
         <Routes>
           
           <Route path="/" element={<Navigate to="/login" />} />

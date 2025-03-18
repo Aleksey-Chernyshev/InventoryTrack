@@ -1,0 +1,116 @@
+.wrapper {
+    background-color: rgba(31, 41, 55, 0.8);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid #374151;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .searchBox {
+    position: relative;
+  }
+  
+  .searchInput {
+    background-color: #1f2937;
+    color: white;
+    padding: 0.5rem 1rem;
+    padding-left: 2.5rem;
+    border-radius: 0.375rem;
+    border: none;
+    outline: none;
+  }
+  
+  .searchIcon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9CA3AF;
+  }
+  
+  .tableContainer {
+    overflow-x: auto;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  .table th, .table td {
+    padding: 0.75rem;
+    text-align: left;
+    color: #D1D5DB;
+    border-bottom: 1px solid #374151;
+  }
+  
+  .userCell {
+    display: flex;
+    align-items: center;
+  }
+  
+  .avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+    font-weight: bold;
+  }
+  
+  .role {
+    padding: 0.25rem 0.5rem;
+    background-color: #1e3a8a;
+    color: #a5b4fc;
+    border-radius: 0.375rem;
+  }
+  
+  .status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .active {
+    background-color: #047857;
+    color: #D1FAE5;
+  }
+  
+  .inactive {
+    background-color: #B91C1C;
+    color: #FEE2E2;
+  }
+  
+  .editButton, .deleteButton {
+    background: none;
+    border: none;
+    color: #3B82F6;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    transition: color 0.2s;
+  }
+  
+  .deleteButton {
+    color: #EF4444;
+  }
+  
+  .editButton:hover {
+    color: #2563EB;
+  }
+  
+  .deleteButton:hover {
+    color: #DC2626;
+  }
+  

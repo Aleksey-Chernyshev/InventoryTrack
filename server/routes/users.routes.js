@@ -9,6 +9,8 @@ router.post('/register', validInfo, UserController.createUser);
 router.post('/login', validInfo, UserController.loginUser);
 router.get('/is-verify', authorization, UserController.isVerifyUser);
 
+
+
 // Маршруты, доступные только админам
 //router.get('/admin-dashboard', authorization, roleAuthorization("admin"), UserController.adminDashboard);
 
