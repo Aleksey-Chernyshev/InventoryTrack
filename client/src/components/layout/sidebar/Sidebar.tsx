@@ -9,6 +9,7 @@ import { GrOverview } from "react-icons/gr";
 import { TbDevicesPc } from "react-icons/tb";
 import { RiAdminFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
+import { CgProfile } from "react-icons/cg";
 
 const SIDEBAR_ITEMS = [
 	{ name: "Overview", color: "#6366f1", icon:GrOverview, path:'/overview'},
@@ -21,47 +22,48 @@ const SIDEBAR_ITEMS = [
 interface SidebarProps {
 	setAuth: (boolean: boolean, userRole: string | null) => void
 	role: string | null;
+	userName: string | null;
   }
-const Sidebar: React.FC<SidebarProps> = ({setAuth,role}) => {
+  const Sidebar: React.FC<SidebarProps> = ({ setAuth, role, userName }) => {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-	const navigate = useNavigate()
+	const navigate = useNavigate();
+  
 	const logout = () => {
-		localStorage.removeItem('token')
-		setAuth(false, null)
-		navigate('/login')
-	  };
-
+	  localStorage.removeItem('token');
+	  localStorage.removeItem('role');
+	  localStorage.removeItem('name');
+	  setAuth(false, null ); // Очистка состояния
+	  navigate('/login');
+	};
+  
 	return (
-		<div className={classNames(styles.sidebar, { [styles.closed]: !isSidebarOpen })}>
-			<div className={styles.sidebar_container}>
-				<button
-					onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-					className={styles.menu_button}
-				>
-					<IoMdMenu size={24}/>
-				</button>
-
-				<nav className={styles.sidebar_nav}>
-					{SIDEBAR_ITEMS.filter(item => !(item.adminOnly && role !== "admin")).map((item) => (
-						<Link key={item.path} to={item.path}>
-							<span key={item.name}>
-								<div className={styles.sidebar_item}>
-									<item.icon size={20} style={{ color: item.color, minWidth: "20px" }} />
-									<span className={styles.sidebar_text}>{item.name}</span>
-								</div>
-							</span>
-						</Link>
-					))}
-				</nav>
-				<button
-				onClick={logout}
-				>
-				<IoLogOutOutline size={20}/>
-				</button>
+	  <div className={classNames(styles.sidebar, { [styles.closed]: !isSidebarOpen })}>
+		<div className={styles.sidebar_container}>
+		  <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className={styles.menu_button}>
+			<IoMdMenu size={24} />
+		  </button>
+  
+		  <nav className={styles.sidebar_nav}>
+			<div className={styles.sidebar_item}>
+			  <CgProfile size={20} style={{ minWidth: "20px" }} />
+			  <span className={styles.sidebar_text}>{userName}</span> {/* Выводим имя пользователя */}
 			</div>
+  
+			{SIDEBAR_ITEMS.filter(item => !(item.adminOnly && role !== "admin")).map((item) => (
+			  <Link key={item.path} to={item.path}>
+				<div className={styles.sidebar_item}>
+				  <item.icon size={20} style={{ color: item.color, minWidth: "20px" }} />
+				  <span className={styles.sidebar_text}>{item.name}</span>
+				</div>
+			  </Link>
+			))}
+		  </nav>
+		  <button onClick={logout}>
+			<IoLogOutOutline size={20} />
+		  </button>
 		</div>
+	  </div>
 	);
-};
-
+  };
+  
 export default Sidebar;

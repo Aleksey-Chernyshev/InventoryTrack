@@ -8,13 +8,14 @@ import style from './Dashboard.module.css';
 interface Props {
   setAuth: (boolean: boolean, userRole: string | null) => void;
   role: string | null;
+  userName: string | null;
 }
 
-const DashboardPage: React.FC<Props> = ({ setAuth, role }) => {
+const DashboardPage: React.FC<Props> = ({ setAuth, role, userName }) => {
   return (
     <Fragment>
       <div className={style.app_container}>
-        <Sidebar setAuth={setAuth} role={role} />
+        <Sidebar setAuth={setAuth} role={role} userName={userName} />
         <div className={style.content}>
           <Routes>
             <Route path="/" element={<div>Добро пожаловать на главную панель!</div>} />
