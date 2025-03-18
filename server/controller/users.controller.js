@@ -48,7 +48,7 @@ class UserController {
     
             const token = jwtGenerator({ id: user.rows[0].user_id, name: user.rows[0].user_name, role: user.rows[0].role });
     
-            return res.json({ token, role: user.rows[0].role }); // <-- Добавляем role в ответ
+            return res.json({ token, role: user.rows[0].role }); 
     
         } catch (error) {
             console.error(error.message);
@@ -59,7 +59,7 @@ class UserController {
 
     async isVerifyUser(req, res) {
         try {
-            res.json({ role: req.user.role });
+            res.json({ role: req.user.role, name: req.user.name});
         } catch (error) {
             console.error(error.message);
             res.status(500).send("Server Error");
