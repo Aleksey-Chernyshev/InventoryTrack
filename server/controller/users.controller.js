@@ -67,6 +67,14 @@ class UserController {
     }
     
 
+    async getUsers(req, res){
+        try {
+            const users = await db.query(`SELECT * FROM users`)
+            res.json(users.rows)
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
     // async adminDashboard(req, res) {
     //     try {
     //         res.json({ message: "Добро пожаловать в панель администратора!" });

@@ -5,7 +5,7 @@
   
   .content_container {
     flex-grow: 1;
-    background-color: #f3f4f6; /* Фон для основной области */
+    background-color: #f3f4f6; 
     padding: 20px;
   }
   
