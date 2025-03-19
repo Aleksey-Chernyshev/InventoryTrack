@@ -48,7 +48,7 @@ class UserController {
     
             const token = jwtGenerator({ id: user.rows[0].user_id, name: user.rows[0].user_name, role: user.rows[0].role });
     
-            return res.json({ token, role: user.rows[0].role }); 
+            return res.json({ token, role: user.rows[0].role, name: user.rows[0].user_name }); 
     
         } catch (error) {
             console.error(error.message);

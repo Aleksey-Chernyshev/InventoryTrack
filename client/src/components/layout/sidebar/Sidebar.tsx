@@ -1,15 +1,14 @@
-
-import { useState } from "react";
-import styles from "./Sidebar.module.css"; 
-import classNames from "classnames";
-import { IoMdMenu } from "react-icons/io";
-import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
-import { FaUsers } from "react-icons/fa";
-import { GrOverview } from "react-icons/gr";
-import { TbDevicesPc } from "react-icons/tb";
-import { RiAdminFill } from "react-icons/ri";
-import { Link, useNavigate } from "react-router-dom";
-import { CgProfile } from "react-icons/cg";
+import { useState } from "react"
+import styles from "./Sidebar.module.css"
+import classNames from "classnames"
+import { IoMdMenu } from "react-icons/io"
+import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5"
+import { FaUsers } from "react-icons/fa"
+import { GrOverview } from "react-icons/gr"
+import { TbDevicesPc } from "react-icons/tb"
+import { RiAdminFill } from "react-icons/ri"
+import { Link, useNavigate } from "react-router-dom"
+import { CgProfile } from "react-icons/cg"
 
 const SIDEBAR_ITEMS = [
 	{ name: "Overview", color: "#6366f1", icon:GrOverview, path:'/overview'},
@@ -20,19 +19,19 @@ const SIDEBAR_ITEMS = [
 	
 ];
 interface SidebarProps {
-	setAuth: (boolean: boolean, userRole: string | null) => void
-	role: string | null;
-	userName: string | null;
+	setAuth: (boolean: boolean, userRole: string | null,userName: string | null) => void
+	role: string | null
+	userName: string | null
   }
   const Sidebar: React.FC<SidebarProps> = ({ setAuth, role, userName }) => {
-	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-	const navigate = useNavigate();
+	const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+	const navigate = useNavigate()
   
 	const logout = () => {
-	  localStorage.removeItem('token');
-	  localStorage.removeItem('role');
-	  localStorage.removeItem('name');
-	  setAuth(false, null ); // Очистка состояния
+	  localStorage.removeItem('token')
+	  localStorage.removeItem('role')
+	  localStorage.removeItem('name')
+	  setAuth(false, null, null )
 	  navigate('/login');
 	};
   
@@ -46,7 +45,7 @@ interface SidebarProps {
 		  <nav className={styles.sidebar_nav}>
 			<div className={styles.sidebar_item}>
 			  <CgProfile size={20} style={{ minWidth: "20px" }} />
-			  <span className={styles.sidebar_text}>{userName}</span> {/* Выводим имя пользователя */}
+			  <span className={styles.sidebar_text}>{userName}</span>
 			</div>
   
 			{SIDEBAR_ITEMS.filter(item => !(item.adminOnly && role !== "admin")).map((item) => (
@@ -63,7 +62,7 @@ interface SidebarProps {
 		  </button>
 		</div>
 	  </div>
-	);
-  };
+	)
+  }
   
 export default Sidebar;

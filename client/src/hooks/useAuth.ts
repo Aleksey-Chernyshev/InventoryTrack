@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { UserService } from "../services/user.service"
 
-export const useAuth = (setAuth: (boolean: boolean, userRole: string | null) => void) => {
+export const useAuth = (setAuth: (boolean: boolean, userRole: string | null, userName: string | null) => void) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
@@ -14,8 +14,10 @@ export const useAuth = (setAuth: (boolean: boolean, userRole: string | null) => 
 
       localStorage.setItem("token", data.token)
       localStorage.setItem("role", data.role)
+      localStorage.setItem("name", data.name)
 
-      setAuth(true, data.role);
+
+      setAuth(true, data.role, data.name);
       navigate(data.role === "admin" ? "/admin" : "/dashboard")
     } catch (error: unknown) {
       console.error(error)

@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Sidebar from '../../components/layout/sidebar/Sidebar';
-import UsersPage from '../UsersPage/UsersPage';
-import AdminPage from '../AdminPage/AdminPage';
-import style from './Dashboard.module.css';
+import React, { Fragment } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import Sidebar from '../../components/layout/sidebar/Sidebar'
+import UsersPage from '../UsersPage/UsersPage'
+import AdminPage from '../AdminPage/AdminPage'
+import style from './Dashboard.module.css'
 
 interface Props {
-  setAuth: (boolean: boolean, userRole: string | null) => void;
-  role: string | null;
-  userName: string | null;
+  setAuth: (boolean: boolean, userRole: string | null) => void
+  role: string | null
+  userName: string | null
 }
 
 const DashboardPage: React.FC<Props> = ({ setAuth, role, userName }) => {

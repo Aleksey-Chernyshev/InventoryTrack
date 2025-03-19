@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios"
+import { AxiosError } from "axios"
 import { useEffect, useState } from "react"
 import { UserService } from "../services/user.service"
 

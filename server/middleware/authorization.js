@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded.user;
-        console.log("Расшифрованный токен:", req.user); // Проверяем, что там есть name
+        console.log("Расшифрованный токен:", req.user); 
         next();
     } catch (err) {
         console.error("Ошибка авторизации:", err.message);
