@@ -4,6 +4,8 @@ import Sidebar from '../../components/layout/sidebar/Sidebar'
 import UsersPage from '../UsersPage/UsersPage'
 import AdminPage from '../AdminPage/AdminPage'
 import style from './Dashboard.module.css'
+import OverviewPage from '../OverviewPage/OverviewPage'
+import SubdivisionsPage from '../SubdivisionsPage/SubdivisionsPage'
 
 interface Props {
   setAuth: (boolean: boolean, userRole: string | null) => void
@@ -18,8 +20,9 @@ const DashboardPage: React.FC<Props> = ({ setAuth, role, userName }) => {
         <Sidebar setAuth={setAuth} role={role} userName={userName} />
         <div className={style.content}>
           <Routes>
-            <Route path="/" element={<div>Добро пожаловать на главную панель!</div>} />
+            <Route path="/" element={<OverviewPage/>} />
             <Route path="/users" element={<UsersPage />} />
+            <Route path="/subdivisions" element={<SubdivisionsPage />} />
             <Route path="/admin" element={role === "admin" ? <AdminPage /> : <div>Доступ запрещен</div>} />
           </Routes>
         </div>
