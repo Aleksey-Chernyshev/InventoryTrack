@@ -36,7 +36,7 @@ export const UserService ={
 
     async GetUsers(){
         try {
-            const response = await axios.get("http://localhost:5000/api/dashboard/users")
+            const response = await axios.get(DashboardURL.USERS_URL)
             return response.data
         } catch (error) {
             console.error("Неизвестная ошибка:", error);

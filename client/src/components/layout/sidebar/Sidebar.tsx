@@ -9,11 +9,13 @@ import { TbDevicesPc } from "react-icons/tb"
 import { RiAdminFill } from "react-icons/ri"
 import { Link, useNavigate } from "react-router-dom"
 import { CgProfile } from "react-icons/cg"
+import { LuBuilding2 } from "react-icons/lu";
 
 const SIDEBAR_ITEMS = [
-	{ name: "Overview", color: "#6366f1", icon:GrOverview, path:'/overview'},
+	{ name: "Overview", color: "#6366f1", icon:GrOverview, path:'/dashboard'},
 	{ name: "Devices", color: "#8B5CF6",  icon:TbDevicesPc, path:'/devices'},
 	{ name: "Users", color: "#EC4899", icon:FaUsers, path:'/dashboard/users'},
+	{ name: "Subdivisions", color: "#CF1859", icon:LuBuilding2, path:'/dashboard/subdivisions'},
 	{ name: "Admin",  color: "#10B981" , icon: RiAdminFill, path:'/dashboard/admin', adminOnly: true},
 	{ name: "Settings",  color: "#6EE7B7" , icon: IoSettingsOutline, path:'/settings'},
 	
