@@ -1,6 +1,6 @@
 import { AxiosError } from "axios"
 import { useEffect, useState } from "react"
-import { UserService } from "../services/user.service"
+import { UserService } from "../../services/user.service"
 
 
 
@@ -11,7 +11,7 @@ interface IUser{
     user_name:string,
     role: string
 }
-export function useUsers(){
+export function useUsers(token: string){
 
     const [user, setUser] = useState<IUser[]>([])
     const [loading, setLoading] = useState(false)
@@ -20,7 +20,7 @@ export function useUsers(){
     async function fetchUsers(){
         try {
             setLoading(true)
-            const response = await UserService.GetUsers()
+            const response = await UserService.GetUsers(token)
             setUser(response)
             console.log(response)
             setLoading(false)
@@ -34,5 +34,5 @@ export function useUsers(){
     useEffect(() => {
         fetchUsers()
     },[])
-    return {loading, error, user}
+    return {loading, error, user, refetchUsers: fetchUsers}
 }

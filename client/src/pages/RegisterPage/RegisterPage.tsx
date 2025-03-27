@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import InputFormAuth from '../../shared/InputFormAuth/InputFormAuth';
 
 import styles from '../LoginPage/LoginPage.module.css'
-import { useRegister } from '../../hooks/useRegister';
+import { useRegister } from '../../hooks/AuthHooks/useRegister';
 
 interface Props {
   setAuth: (boolean: boolean, userRole: string | null) => void;

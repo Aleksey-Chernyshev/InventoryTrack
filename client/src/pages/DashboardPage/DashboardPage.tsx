@@ -21,7 +21,7 @@ const DashboardPage: React.FC<Props> = ({ setAuth, role, userName }) => {
         <div className={style.content}>
           <Routes>
             <Route path="/" element={<OverviewPage/>} />
-            <Route path="/users" element={<UsersPage />} />
+            <Route path="/users" element={role === "admin" ? <UsersPage /> : <div>Доступ запрещен</div>} />
             <Route path="/subdivisions" element={<SubdivisionsPage />} />
             <Route path="/admin" element={role === "admin" ? <AdminPage /> : <div>Доступ запрещен</div>} />
           </Routes>
