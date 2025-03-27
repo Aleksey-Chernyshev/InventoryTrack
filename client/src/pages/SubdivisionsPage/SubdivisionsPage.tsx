@@ -1,3 +1,4 @@
+import Header from "../../components/layout/header/Header";
 import { ISubdiv, useSubdivisions } from "../../hooks/useSubdivisions"
 
 export default function SubdivisionsPage(){
@@ -6,7 +7,7 @@ export default function SubdivisionsPage(){
     if (error) return <div>Ошибка: {error}</div>;
     return(
         <div>
-            <div>subdivisions page</div>
+            <Header title={'Подразделения'} />
             {subdiv.map((subdiv: ISubdiv) =>(
                 <div key={subdiv.subdiv_id}>
                     <h3>{subdiv.subdiv_name}</h3>
