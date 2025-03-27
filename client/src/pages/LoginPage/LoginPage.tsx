@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import InputFormAuth from '../../shared/InputFormAuth/InputFormAuth';
 
 import styles from './LoginPage.module.css'
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/AuthHooks/useAuth';
 
 interface Props {
   setAuth: (boolean: boolean, userRole: string | null) => void;

@@ -1,13 +1,12 @@
 const Router = require('express');
 const router = new Router();
-const UserController = require('../controller/users.controller');
-const validInfo = require("../middleware/validInfo");
+const roleAuthorization = require("../middleware/roleAuthorization");
 const authorization = require("../middleware/authorization");
-const roleAuthorization = require("../middleware/roleAuthorization"); // Проверка роли
+const UsersController = require('../controller/users.controller');
 
-router.post('/register', validInfo, UserController.createUser);
-router.post('/login', validInfo, UserController.loginUser);
-router.get('/is-verify', authorization, UserController.isVerifyUser);
+
+router.delete('/users/:id', authorization, roleAuthorization("admin"), UsersController.deleteUser)
+router.put('/users/:id', authorization,roleAuthorization("admin"), UsersController.updateUser)
 
 
 

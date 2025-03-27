@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { UserService } from "../services/user.service"
+import { UserService } from "../../services/user.service"
 
 export const useAuth = (setAuth: (boolean: boolean, userRole: string | null, userName: string | null) => void) => {
   const [email, setEmail] = useState("")

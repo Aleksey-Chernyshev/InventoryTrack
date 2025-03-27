@@ -34,14 +34,38 @@ export const UserService ={
         }
     },
 
-    async GetUsers(){
+    async GetUsers(token: string){
         try {
-            const response = await axios.get(DashboardURL.USERS_URL)
+            const response = await axios.get(DashboardURL.USERS_URL,{
+                headers: {Authorization: `Bearer ${token}`}
+            })
             return response.data
         } catch (error) {
             console.error("Неизвестная ошибка:", error);
         }
 
+    },
+
+    async DeleteUser(id: number, token: string){
+        try {
+            const repsonse = await axios.delete(`${DashboardURL.USERS_URL}/${id}`,{
+                headers: {Authorization: `Bearer ${token}`}
+            })
+            return repsonse.data
+        } catch (error) {
+            console.error("Неизвестная ошибка:", error);
+        }
+    },
+
+    async UpdateUser(id: number, token: string, data:{name?: string, email?: string, password?: string}){
+        try {
+            const response = await axios.put(`${DashboardURL.USERS_URL}/${id}`, data,{
+                headers: {Authorization: `Bearer ${token}`}
+            })
+            return response.data
+        } catch (error) {
+            console.error("Ошибка при обновлении данных:", error)
+        }
     }
     
 }
