@@ -1,0 +1,57 @@
+.header {
+
+    top: 0; /* Position at the very top of the page */
+    left: 0; /* Stretch the header to the left edge */
+    width: 100%; /* Full width of the page */
+    background-color: rgba(31, 41, 55, 0.9); /* Transparent background with dark shade */
+    backdrop-filter: blur(10px); /* Add a blur effect to the background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+    padding: 1rem 2rem; /* Padding inside the header */
+    border-bottom: 1px solid #2d3748; /* Border under the header */
+    z-index: 10; /* Ensure header stays above the content */
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between; /* Space between title and app info */
+    align-items: center; /* Center items vertically */
+    max-width: 1280px; /* Max width for header content */
+    margin: 0 auto; /* Center the header content */
+  }
+  
+  .appInfo {
+    display: flex;
+    align-items: center; /* Align logo and app name horizontally */
+  }
+  
+  .logo {
+    width: 85px; /* Logo size */
+    height: 50px; /* Logo size */
+    margin-right: 10px; /* Space between logo and app name */
+  }
+  
+  .appName {
+    font-size: 2.5rem; /* App name font size */
+    color: #edf2f7; /* Light text color */
+    font-weight: 800; /* Bold font for app name */
+  }
+  
+  .title {
+    font-size: 1.5rem; /* Page title font size */
+    font-weight: 700; /* Bold font */
+    color: #edf2f7; /* Light text color */
+    margin: 0;
+    text-align: center; /* Center the page title */
+    flex-grow: 1; /* Allow the title to take up remaining space */
+  }
+  
+  @media (max-width: 768px) {
+    .title {
+      font-size: 1.25rem; /* Adjust font size for smaller screens */
+    }
+  
+    .appName {
+      font-size: 1rem; /* Smaller font size for app name */
+    }
+  }
+  
