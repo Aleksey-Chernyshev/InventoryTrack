@@ -9,6 +9,7 @@ export interface ISubdiv{
     subdiv_name: string,
     subdiv_address: string,
     subdiv_position: [number, number]
+    departments: { department_name: string, department_location: string }[]
 
 }
 
