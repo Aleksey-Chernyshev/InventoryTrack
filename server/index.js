@@ -7,6 +7,7 @@ const authRoutes = require('./routes/auth.routes');
 const dashboardRoutes = require('./routes/dashboard.routes'); 
 const subdivisionsRoutes = require('./routes/subdivisions.routes')
 const usersRoutes = require('./routes/users.routes')
+const devicesRoutes = require('./routes/devices.routes')
 
 dotenv.config();
 
@@ -19,8 +20,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);  
 app.use('/api/dashboard', subdivisionsRoutes);  
 app.use('/api/dashboard', usersRoutes);
+app.use('/api/dashboard', usersRoutes);
+app.use('/api/dashboard', devicesRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

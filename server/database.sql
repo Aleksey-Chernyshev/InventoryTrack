@@ -58,6 +58,16 @@ CREATE TABLE monoblocks (
 );
 
 
+
+CREATE TABLE device_location (
+    location_id SERIAL PRIMARY KEY,
+    device_id INT NOT NULL REFERENCES devices(device_id) ON DELETE CASCADE,
+    from_subdiv_id INT REFERENCES subdivisions(subdiv_id) ON DELETE SET NULL,
+    to_subdiv_id INT NOT NULL REFERENCES subdivisions(subdiv_id) ON DELETE CASCADE,
+    moved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    moved_by_user INT NOT NULL REFERENCES users(user_id) ON DELETE SET NULL
+);
+
 INSERT INTO subdivisions (subdiv_name, subdiv_address, subdiv_position)
 VALUES 
 ('Транснефть-Верхняя Волга','Гранитный переулок, 4А, Нижний Новгород', ARRAY[56.314876338684925, 44.003520566551366]);
@@ -87,8 +97,5 @@ VALUES (2, 'Windows 10', 'Intel i5', 3.6, 8);
 
 
 
-INSERT INTO devices (device_name, device_type_id, device_inventory_number, device_serial_number, device_model, device_date_commissioning)
-VALUES ('MFU Epson', 2, 'INV98765', 'SN98765432', 'Epson EcoTank', '2023-03-01')
-RETURNING device_id;
-INSERT INTO mfu (device_id, mfu_resolution, mfu_functions)
-VALUES (3, '1200x1200', 'Print, Scan, Copy');
+INSERT INTO device_locations (device_id, subdiv_id, assigned_by_user)
+VALUES (1, 1, 7);

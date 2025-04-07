@@ -13,7 +13,7 @@ import { LuBuilding2 } from "react-icons/lu";
 
 const SIDEBAR_ITEMS = [
 	{ name: "Overview", color: "#6366f1", icon:GrOverview, path:'/dashboard'},
-	{ name: "Devices", color: "#8B5CF6",  icon:TbDevicesPc, path:'/devices'},
+	{ name: "Devices", color: "#8B5CF6",  icon:TbDevicesPc, path:'/dashboard/devices'},
 	{ name: "Users", color: "#EC4899", icon:FaUsers, path:'/dashboard/users',adminOnly: true},
 	{ name: "Subdivisions", color: "#CF1859", icon:LuBuilding2, path:'/dashboard/subdivisions'},
 	{ name: "Admin",  color: "#10B981" , icon: RiAdminFill, path:'/dashboard/admin', adminOnly: true},
