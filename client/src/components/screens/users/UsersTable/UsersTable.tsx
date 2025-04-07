@@ -17,6 +17,7 @@ interface IUser {
 const UsersTable: React.FC = () => {
   const token = localStorage.getItem("token")
   if(!token) throw new Error("токен отсутствует")
+    
     const { user, loading, error, refetchUsers } = useUsers(token)
     const [searchTerm, setSearchTerm] = useState("")
     const [selectedUser, setSelectedUser] = useState<IUser | null>(null)
@@ -130,8 +131,10 @@ const UsersTable: React.FC = () => {
                 <span className={styles.role}>{user.role}</span>
               </td>
               <td>
-                <button className={styles.editButton} onClick={() => {setSelectedUser(user); setEditModal(true)}}>Edit</button>
-                <button className={styles.deleteButton} onClick={() => handleDelete(user.user_id)}>Delete</button>
+                <div className={styles.buttons_container}>
+                <button className={`${styles.button} ${styles.edit}`} onClick={() => {setSelectedUser(user); setEditModal(true)}}>Изменить</button>
+                <button className={`${styles.button} ${styles.delete}`} onClick={() => handleDelete(user.user_id)}>Удалить</button>
+                </div>
               </td>
             </tr>
           ))}

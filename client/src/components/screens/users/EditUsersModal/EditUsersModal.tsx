@@ -1,23 +1,23 @@
-import React, { FC } from "react"
-import Modal from "../../../../shared/Modal/Modal"
-import InputFormAuth from "../../../../shared/InputFormAuth/InputFormAuth"
-import styles from "./EditUsersModal.module.css"
+import React, { FC, useState } from "react";
+import Modal from "../../../../shared/Modal/Modal";
+import InputFormAuth from "../../../../shared/InputFormAuth/InputFormAuth";
+import styles from "./EditUsersModal.module.css";
 
 interface IUser {
-  user_id: number
-  user_name: string
-  user_email: string
-  user_password: string
-  role: string
+  user_id: number;
+  user_name: string;
+  user_email: string;
+  user_password: string;
+  role: string;
 }
 
 interface EditUserModalProps {
-  selectedUser: IUser | null
-  editModal: boolean
-  closeEditModal: () => void
-  updatedUserData: { name: string; email: string, password: string }
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleUpdate: (id: number) => void
+  selectedUser: IUser | null;
+  editModal: boolean;
+  closeEditModal: () => void;
+  updatedUserData: { name: string; email: string; password: string };
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleUpdate: (id: number) => void;
 }
 
 const EditUsersModal: FC<EditUserModalProps> = ({
@@ -28,10 +28,33 @@ const EditUsersModal: FC<EditUserModalProps> = ({
   handleChange,
   handleUpdate,
 }) => {
-  if (!selectedUser) return null
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  
+  if (!selectedUser) return null;
+
+  const validateForm = (): boolean => {
+    const newErrors: { [key: string]: string } = {};
+    const validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(updatedUserData.email);
+
+    if (!updatedUserData.name) newErrors.name = "Имя не может быть пустым";
+    if (!updatedUserData.email) newErrors.email = "Email не может быть пустым";
+    if (!validEmail) newErrors.email = "Некорректный формат email";
+    if (updatedUserData.password.length < 6) newErrors.password = "Пароль должен содержать минимум 6 символов";
+
+    setErrors(newErrors);
+    
+    // Если ошибок нет — форма валидна
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSaveChanges = () => { 
+    if (validateForm()) {
+      handleUpdate(selectedUser.user_id);
+    }
+  };
 
   return (
-    <Modal active={editModal} onClose={closeEditModal} style={{ width: "500px", height: "620px" }}>
+    <Modal active={editModal} onClose={closeEditModal} style={{ width: "500px", height: "720px" }}>
       <div className={styles.modalContent}>
         <h2 className={styles.modalTitle}>Что бы вы хотели изменить?</h2>
         <div className={styles.oldData}>
@@ -50,6 +73,7 @@ const EditUsersModal: FC<EditUserModalProps> = ({
               onChange={handleChange}
               placeholder="Имя"
             />
+            {errors.name && <div className={styles.error}>{errors.name}</div>}
           </div>
           <div className={styles.formGroup}>
             <label>Новый адрес почты</label>
@@ -60,6 +84,9 @@ const EditUsersModal: FC<EditUserModalProps> = ({
               onChange={handleChange}
               placeholder="Email"
             />
+            {errors.email && <div className={styles.error}>{errors.email}</div>}
+          </div>
+          <div className={styles.formGroup}>
             <label>Новый пароль</label>
             <InputFormAuth
               type="password"
@@ -68,8 +95,9 @@ const EditUsersModal: FC<EditUserModalProps> = ({
               onChange={handleChange}
               placeholder="Пароль"
             />
+            {errors.password && <div className={styles.error}>{errors.password}</div>}
           </div>
-          <button className={styles.btn} type="button" onClick={() => handleUpdate(selectedUser.user_id)}>
+          <button className={styles.btn} type="button" onClick={handleSaveChanges}>
             Сохранить изменения
           </button>
         </form>
@@ -78,4 +106,4 @@ const EditUsersModal: FC<EditUserModalProps> = ({
   );
 };
 
-export default EditUsersModal
+export default EditUsersModal;
