@@ -14,7 +14,7 @@ export const useRegister = (setAuth: (boolean: boolean, userRole: string | null)
       const data = await UserService.RegisterUser({ name, email, password })
       console.log("Ответ от сервера:", data)
       localStorage.setItem('token', data.token);
-      setAuth(true, "user"); // Новый пользователь по умолчанию не админ
+      setAuth(true, "user"); 
       navigate('/dashboard');
     } catch (error: unknown) {
         console.error(error);
