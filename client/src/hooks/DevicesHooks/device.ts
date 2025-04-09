@@ -1,7 +1,12 @@
 import { DevicesService } from "../../services/devices.service"
 import { IDevice } from "./useDevices"
 
-
+interface MoveDeviceData {
+    device_id: number;
+    from_department_id: number;
+    to_department_id: number;
+    moved_by_user: number;
+  }
 
 export const UpdateDevice = async(id: number, data: Partial<IDevice>) => {
     try {
@@ -24,3 +29,12 @@ export const DeleteDevice = async (id: number) =>{
             
         }
 }
+
+export const MoveDevice = async (data: MoveDeviceData) => {
+    try {
+      const response = await DevicesService.MoveDevice(data)
+      console.log("Устройство перемещено:", response)
+    } catch (error) {
+      console.error("Ошибка при перемещении устройства:", error)
+    }
+  }

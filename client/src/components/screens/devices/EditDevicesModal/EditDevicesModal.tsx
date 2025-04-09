@@ -9,7 +9,7 @@ interface EditDeviceModalProps {
   editModal: boolean;
   closeEditModal: () => void;
   updatedDeviceData: any;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: ( e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   handleUpdate: (id: number) => void;
 }
 
@@ -104,6 +104,17 @@ const EditDevicesModal: FC<EditDeviceModalProps> = ({
         <form className={styles.formContainer}>
           <div className={styles.formGroup}>
             <label>Название: {selectedDevice.device_name}</label>
+            <label>Статус устройства</label>
+              <select
+                name="device_status"
+                value={updatedDeviceData.device_status || ""}
+                onChange={handleChange}
+                className={styles.input}
+              >
+                <option value="">-- Выберите статус --</option>
+                <option value="Активен">Активен</option>
+                <option value="В ремонте">В ремонте</option>
+              </select>
           </div>
           {renderDeviceSpecificFields()}
           <button className={styles.btn} type="button" onClick={() => handleUpdate(selectedDevice.device_id)}>

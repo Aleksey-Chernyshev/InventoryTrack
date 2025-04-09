@@ -44,7 +44,6 @@
     transition: border-color 0.2s ease;
   }
   
-  /* Стили для выпадающего списка при фокусе */
   .statusFilter:focus {
     border-color: #007bff;
     outline: none;
@@ -108,74 +107,53 @@
     color: #FEE2E2;
   }
   
-  /* .editButton, .deleteButton {
-    background: none;
-    border: none;
-    color: #3B82F6;
-    cursor: pointer;
-    margin-right: 0.5rem;
-    transition: color 0.2s;
-  }
-  
-  .deleteButton {
-    color: #EF4444;
-  }
-  
-  .editButton:hover {
-    color: #2563EB;
-  }
-  
-  .deleteButton:hover {
-    color: #DC2626;
-  } */
-  
 .buttons_container {
-    display: flex;            /* Используем flexbox */
-    flex-direction: column;   /* Кнопки будут располагаться друг на друге */
-    gap: 10px;                /* Расстояние между кнопками */
-    width: 150px;             /* Фиксированная ширина для всех кнопок */
+    display: flex;            
+    flex-direction: column;   
+    gap: 10px;                
+    width: 150px;             
 }
 
-/* Кнопки */
+
 .button {
-    padding: 10px 20px;       /* Размеры кнопок */
+    padding: 10px 20px;       
     font-size: 14px;
     font-weight: 500;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 100%;              /* Задаем ширину на 100% от родительского контейнера */
+    width: 100%;             
 }
 
 .button:hover {
-    transform: scale(1.05); /* Легкий эффект при наведении */
+    transform: scale(1.05); 
 }
 
-/* Переместить */
+
 .move {
-    background-color: #4A90E2; /* Спокойный синий */
+    background-color: #4A90E2; 
 }
 
 .move:hover {
-    background-color: #357ABD; /* Темнее при наведении */
+    background-color: #357ABD; 
 }
 
-/* Изменить */
+
 .edit {
-    background-color: #ecbb3e; /* Оранжевый оттенок */
+    background-color: #ecbb3e; 
 }
 
 .edit:hover {
-    background-color: #D97706; /* Темнее при наведении */
+    background-color: #D97706; 
 }
 
 /* Удалить */
 .delete {
-    background-color: #EF4444; /* Красный */
+    background-color: #EF4444; 
 }
 
 .delete:hover {
-    background-color: #DC2626; /* Темнее при наведении */
+    background-color: #DC2626; 
 }
 

@@ -25,6 +25,12 @@ export interface IDevice{
     monoblock_cpu_frequency?: number;
     monoblock_ram?: number;
 
+    to_department_id?: number;
+    department_name?: string;
+    from_department_id?: number,
+    subdiv_name?: string;
+
+
 }
 
 export function useDevices(){

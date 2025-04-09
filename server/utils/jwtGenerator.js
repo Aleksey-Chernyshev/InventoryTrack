@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-require('dotenv').config(); // Убедись, что переменные окружения загружены
+require('dotenv').config();
 
 const jwtGenerator = ({ id, name, role }) => {
     const payload = {

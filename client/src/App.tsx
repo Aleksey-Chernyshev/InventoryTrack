@@ -13,6 +13,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [role, setRole] = useState<string | null>(null)
   const [userName, setUserName] = useState<string | null>(null)
+  
 
   const setAuth = (auth: boolean, userRole: string | null = null, name: string | null = null) => {
     setIsAuthenticated(auth)

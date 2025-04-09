@@ -27,5 +27,19 @@ export const DevicesService = {
         } catch (error) {
             console.log('Error', error)
         }
+    },
+    async MoveDevice(data: {
+        device_id: number;
+        from_department_id: number;
+        to_department_id: number;
+        moved_by_user: number;
+    }) {
+        try {
+            const response = await axios.post(DashboardURL.MOVE_DEVICE_URL, data);
+            return response.data;
+        } catch (error) {
+            console.log("Ошибка при перемещении устройства:", error);
+            throw error;
+        }
     }
 }
