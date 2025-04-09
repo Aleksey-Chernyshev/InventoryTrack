@@ -7,13 +7,16 @@ import { format } from "date-fns"
 import { ru } from "date-fns/locale"
 import { DeleteDevice, UpdateDevice } from "../../../../hooks/DevicesHooks/device"
 import EditDevicesModal from "../EditDevicesModal/EditDevicesModal"
+import MovingDevicesModal from "../MovingDevicesModal/MovingDevicesModal"
 
 const DevicesTable: React.FC = () => {
     const { loading, error, device, refetchDevice } = useDevices()
     const [searchTerm, setSearchTerm] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
     const [selectedDevice, setSelectedDevice] = useState<IDevice | null>(null)
+    const [selectedMovingDevice, setSelectedMovingDevice] = useState<IDevice | null>(null)
     const [editModal, setEditModal] = useState(false)
+    const [movingModal, setMovingModal] = useState(false)
     const [updatedDeviceData, setUpdatedDeviceData] = useState<any>({})
 
     useEffect(() => {
@@ -41,13 +44,18 @@ const DevicesTable: React.FC = () => {
         });
     }, [device, searchTerm, statusFilter])
 
+    const closeMovingModal = () => {
+        setMovingModal(false)
+        setSelectedMovingDevice(null)
+    };
+    
     const closeEditModal = () => {
         setEditModal(false)
         setSelectedDevice(null)
         setUpdatedDeviceData({})
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = ( e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target
         setUpdatedDeviceData((prevData: any) => ({
             ...prevData,
@@ -78,6 +86,9 @@ const DevicesTable: React.FC = () => {
             console.error("Ошибка при удалении:", error);
         }
     };
+
+
+    
 
     const formatDate = (dateString: string) => {
         return format(new Date(dateString), "dd MMMM yyyy", { locale: ru })
@@ -127,6 +138,7 @@ const DevicesTable: React.FC = () => {
                                 <th>Модель</th>
                                 <th>Дата ввода в эксплуатацию</th>
                                 <th>Статус</th>
+                                <th>Расположение</th>
                                 <th>Доп. информация</th>
                                 <th>Действия</th>
                             </tr>
@@ -142,6 +154,7 @@ const DevicesTable: React.FC = () => {
                                     <td>{device.device_model || "—"}</td>
                                     <td>{formatDate(device.device_date_commissioning) || "—"}</td>
                                     <td>{device.device_status || "—"}</td>
+                                    <td>{device.department_name ? `${device.department_name} (${device.subdiv_name})` : "—"}</td>
                                     <td>
                                         {device.device_type_name === "Принтер" && (
                                             <>
@@ -161,7 +174,13 @@ const DevicesTable: React.FC = () => {
                                     </td>
                                     <td>
                                         <div className={styles.buttons_container}>
-                                            <button className={`${styles.button} ${styles.move}`}>Переместить</button>
+                                            <button 
+                                                className={`${styles.button} ${styles.move}`}
+                                                onClick={() =>{
+                                                    setSelectedMovingDevice(device);
+                                                    setMovingModal(true);
+                                                }}
+                                            >Переместить</button>
                                             <button
                                                 className={`${styles.button} ${styles.edit}`}
                                                 onClick={() => {
@@ -185,6 +204,12 @@ const DevicesTable: React.FC = () => {
                     </table>
                 </div>
             </div>
+            <MovingDevicesModal
+                selectedMovingDevice={selectedMovingDevice}
+                movingModal={movingModal}
+                closeMovingModal={closeMovingModal}        
+                refetchDevice={refetchDevice} 
+             />
             <EditDevicesModal
                 selectedDevice={selectedDevice}
                 editModal={editModal}

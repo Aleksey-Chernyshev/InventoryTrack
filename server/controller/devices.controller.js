@@ -5,25 +5,46 @@ class DevicesController {
         try {
             const devices = await db.query(`
                 SELECT 
-                    d.device_id, 
-                    d.device_name, 
-                    dt.device_type_name, 
-                    d.device_inventory_number, 
-                    d.device_serial_number, 
-                    d.device_model, 
-                    d.device_date_commissioning, 
-                    d.device_status,
-                    p.printer_format, 
-                    p.printer_color, 
-                    p.printer_cartridge,
-                    m.monoblock_os, 
-                    m.monoblock_cpu, 
-                    m.monoblock_cpu_frequency, 
-                    m.monoblock_ram
+                d.device_id, 
+                latest_location.to_department_id AS from_department_id,
+                d.device_name, 
+                dt.device_type_name, 
+                d.device_inventory_number, 
+                d.device_serial_number, 
+                d.device_model, 
+                d.device_date_commissioning, 
+                d.device_status,
+
+                p.printer_format, 
+                p.printer_color, 
+                p.printer_cartridge,
+
+                m.monoblock_os, 
+                m.monoblock_cpu, 
+                m.monoblock_cpu_frequency, 
+                m.monoblock_ram,
+
+                latest_location.to_department_id,
+                latest_location.department_name,
+                latest_location.subdiv_name
+
                 FROM devices d
                 JOIN device_types dt ON d.device_type_id = dt.device_type_id
                 LEFT JOIN printers p ON d.device_id = p.device_id
                 LEFT JOIN monoblocks m ON d.device_id = m.device_id
+
+                LEFT JOIN LATERAL (
+                    SELECT 
+                        dl.to_department_id,
+                        dep.department_name,
+                        s.subdiv_name
+                    FROM device_location dl
+                    JOIN departments dep ON dep.department_id = dl.to_department_id
+                    JOIN subdivisions s ON s.subdiv_id = dep.department_type
+                    WHERE dl.device_id = d.device_id
+                    ORDER BY dl.moved_at DESC
+                    LIMIT 1
+                ) AS latest_location ON true
             `);
             res.json(devices.rows)
         } catch (error) {
@@ -80,7 +101,14 @@ class DevicesController {
                 return res.status(404).json({ message: 'Устройство не найдено' });
             }
             
-            const { device_type_name } = deviceData;
+            const { device_status, device_type_name } = deviceData;
+
+            if (device_status) {
+                await db.query(
+                    `UPDATE devices SET device_status = $1 WHERE device_id = $2`,
+                    [device_status, id]
+                );
+            }
             if (device_type_name === "Принтер") {
                 const { printer_format, printer_color, printer_cartridge } = deviceData;
                 await db.query(

@@ -15,6 +15,7 @@ export const useAuth = (setAuth: (boolean: boolean, userRole: string | null, use
       localStorage.setItem("token", data.token)
       localStorage.setItem("role", data.role)
       localStorage.setItem("name", data.name)
+      localStorage.setItem("user_id", data.id.toString())
 
 
       setAuth(true, data.role, data.name);

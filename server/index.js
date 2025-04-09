@@ -1,13 +1,15 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
+const express = require('express')
+const cors = require('cors')
+const dotenv = require('dotenv')
+const bodyParser = require('body-parser')
 
-const authRoutes = require('./routes/auth.routes'); 
-const dashboardRoutes = require('./routes/dashboard.routes'); 
+const authRoutes = require('./routes/auth.routes');
+const dashboardRoutes = require('./routes/dashboard.routes')
 const subdivisionsRoutes = require('./routes/subdivisions.routes')
 const usersRoutes = require('./routes/users.routes')
 const devicesRoutes = require('./routes/devices.routes')
+const departmentsRoutes = require('./routes/departments.routes')
+const moveDeviceRoutes = require('./routes/moveDevice.routes')
 
 dotenv.config();
 
@@ -22,6 +24,8 @@ app.use('/api/dashboard', subdivisionsRoutes);
 app.use('/api/dashboard', usersRoutes);
 app.use('/api/dashboard', usersRoutes);
 app.use('/api/dashboard', devicesRoutes);
+app.use('/api/dashboard', departmentsRoutes);
+app.use('/api/dashboard', moveDeviceRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => {

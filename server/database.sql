@@ -62,11 +62,12 @@ CREATE TABLE monoblocks (
 CREATE TABLE device_location (
     location_id SERIAL PRIMARY KEY,
     device_id INT NOT NULL REFERENCES devices(device_id) ON DELETE CASCADE,
-    from_subdiv_id INT REFERENCES subdivisions(subdiv_id) ON DELETE SET NULL,
-    to_subdiv_id INT NOT NULL REFERENCES subdivisions(subdiv_id) ON DELETE CASCADE,
+    from_department_id INT REFERENCES departments(department_id) ON DELETE SET NULL,  
+    to_department_id INT NOT NULL REFERENCES departments(department_id) ON DELETE CASCADE, 
     moved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    moved_by_user INT NOT NULL REFERENCES users(user_id) ON DELETE SET NULL
+    moved_by_user INT REFERENCES users(user_id) ON DELETE SET NULL
 );
+
 
 INSERT INTO subdivisions (subdiv_name, subdiv_address, subdiv_position)
 VALUES 
