@@ -66,7 +66,7 @@ const MovingDevicesModal: FC<MovingDevicesModalProps> = ({
   };
 
   return (
-    <Modal active={movingModal} onClose={closeMovingModal} style={{ width: "500px", height: "720px" }}>
+    <Modal active={movingModal} onClose={closeMovingModal} style={{ width: "500px", height: "420px" }}>
       <div className={styles.modalContent}>
         <h2 className={styles.modalTitle}>Выполним перемещение устройства</h2>
         <form className={styles.formContainer}>
