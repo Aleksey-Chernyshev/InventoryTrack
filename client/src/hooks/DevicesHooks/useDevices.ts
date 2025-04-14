@@ -29,6 +29,7 @@ export interface IDevice{
     department_name?: string;
     from_department_id?: number,
     subdiv_name?: string;
+    subdiv_id?:number;
 
 
 }

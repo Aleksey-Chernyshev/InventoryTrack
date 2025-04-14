@@ -9,7 +9,14 @@ import { DeleteDevice, UpdateDevice } from "../../../../hooks/DevicesHooks/devic
 import EditDevicesModal from "../EditDevicesModal/EditDevicesModal"
 import MovingDevicesModal from "../MovingDevicesModal/MovingDevicesModal"
 
-const DevicesTable: React.FC = () => {
+
+
+interface DevicesTableProps {
+    subdivId?: number;
+    departmentName?: string;
+  }
+
+const DevicesTable: React.FC<DevicesTableProps> = ({ subdivId, departmentName }) => {
     const { loading, error, device, refetchDevice } = useDevices()
     const [searchTerm, setSearchTerm] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
@@ -38,11 +45,16 @@ const DevicesTable: React.FC = () => {
                 ? device.device_status === statusFilter
                 : true;
 
+            const matchesDepartment = departmentName
+                ? device.department_name === departmentName
+                : true;
+            const isInSubdiv = subdivId ? device.subdiv_id === subdivId : true;
+
             const isNotDeleted = device.device_status !== "Неактивен"
 
-            return matchesSearchTerm && matchesStatus && isNotDeleted
+            return matchesSearchTerm && matchesStatus && isNotDeleted && isInSubdiv && matchesDepartment
         });
-    }, [device, searchTerm, statusFilter])
+    }, [device, searchTerm, statusFilter, subdivId, departmentName])
 
     const closeMovingModal = () => {
         setMovingModal(false)

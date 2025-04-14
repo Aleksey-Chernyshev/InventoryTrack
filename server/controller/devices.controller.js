@@ -26,7 +26,8 @@ class DevicesController {
 
                 latest_location.to_department_id,
                 latest_location.department_name,
-                latest_location.subdiv_name
+                latest_location.subdiv_name,
+                latest_location.subdiv_id
 
                 FROM devices d
                 JOIN device_types dt ON d.device_type_id = dt.device_type_id
@@ -37,7 +38,8 @@ class DevicesController {
                     SELECT 
                         dl.to_department_id,
                         dep.department_name,
-                        s.subdiv_name
+                        s.subdiv_name, 
+                        s.subdiv_id
                     FROM device_location dl
                     JOIN departments dep ON dep.department_id = dl.to_department_id
                     JOIN subdivisions s ON s.subdiv_id = dep.department_type

@@ -40,13 +40,13 @@ const EditDevicesModal: FC<EditDeviceModalProps> = ({
       case "Принтер":
         return (
           <>
-            <label>Формат</label>
+            <p>Формат</p>
             <InputFormAuth
                     name="printer_format"
                     value={updatedDeviceData.printer_format || ""}
                     onChange={handleChange}
                     placeholder="Формат" type={""}            />
-            <label>
+            <p>
               <input
                 type="checkbox"
                 name="printer_color"
@@ -54,8 +54,8 @@ const EditDevicesModal: FC<EditDeviceModalProps> = ({
                 onChange={handleCheckboxChange}
               />
               Цветной
-            </label>
-            <label>Картридж</label>
+            </p>
+            <p>Картридж</p>
             <InputFormAuth
                     name="printer_cartridge"
                     value={updatedDeviceData.printer_cartridge || ""}
@@ -66,25 +66,25 @@ const EditDevicesModal: FC<EditDeviceModalProps> = ({
       case "Моноблок":
         return (
           <>
-            <label>ОС</label>
+            <p>ОС</p>
             <InputFormAuth
                     name="monoblock_os"
                     value={updatedDeviceData.monoblock_os || ""}
                     onChange={handleChange}
                     placeholder="ОС" type={""}            />
-            <label>Процессор</label>
+            <p>Процессор</p>
             <InputFormAuth
                     name="monoblock_cpu"
                     value={updatedDeviceData.monoblock_cpu || ""}
                     onChange={handleChange}
                     placeholder="Процессор" type={""}            />
-            <label>Частота</label>
+            <p>Частота</p>
             <InputFormAuth
                     name="monoblock_cpu_frequency"
                     value={updatedDeviceData.monoblock_cpu_frequency || ""}
                     onChange={handleChange}
                     placeholder="ГГц" type={""}            />
-            <label>ОЗУ</label>
+            <p>ОЗУ</p>
             <InputFormAuth
                     name="monoblock_ram"
                     value={updatedDeviceData.monoblock_ram || ""}
@@ -103,8 +103,8 @@ const EditDevicesModal: FC<EditDeviceModalProps> = ({
         <h2 className={styles.modalTitle}>Редактировать устройство</h2>
         <form className={styles.formContainer}>
           <div className={styles.formGroup}>
-            <label>Название: {selectedDevice.device_name}</label>
-            <label>Статус устройства</label>
+            <p><strong>Название:</strong> {selectedDevice.device_name}</p>
+            <p><strong>Статус устройства:</strong></p>
               <select
                 name="device_status"
                 value={updatedDeviceData.device_status || ""}

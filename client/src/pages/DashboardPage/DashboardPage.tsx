@@ -7,6 +7,7 @@ import style from './Dashboard.module.css'
 import OverviewPage from '../OverviewPage/OverviewPage'
 import SubdivisionsPage from '../SubdivisionsPage/SubdivisionsPage'
 import DevicesPage from '../DevicesPage/DevicesPage'
+import SubdivDevicesPage from '../SubdivDevicesPage/SubdivDevicesPage'
 
 interface Props {
   setAuth: (boolean: boolean, userRole: string | null) => void
@@ -24,6 +25,7 @@ const DashboardPage: React.FC<Props> = ({ setAuth, role, userName }) => {
             <Route path="/" element={<OverviewPage/>} />
             <Route path="/users" element={role === "admin" ? <UsersPage /> : <div>Доступ запрещен</div>} />
             <Route path="/subdivisions" element={<SubdivisionsPage />} />
+            <Route path="/subdivisions/:subdivId" element={<SubdivDevicesPage />} />
             <Route path="/devices" element={<DevicesPage />} />
             <Route path="/admin" element={role === "admin" ? <AdminPage /> : <div>Доступ запрещен</div>} />
           </Routes>
