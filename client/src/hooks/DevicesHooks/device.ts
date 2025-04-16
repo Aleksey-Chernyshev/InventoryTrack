@@ -8,6 +8,15 @@ interface MoveDeviceData {
     moved_by_user: number;
   }
 
+export const CreateDevice = async (data: any) => {
+  try {
+    const response = await DevicesService.CreateDevice(data);
+    console.log("Устройство создано:", response);
+  } catch (error) {
+    console.error("Ошибка при создании устройства:", error);
+  }
+};  
+
 export const UpdateDevice = async(id: number, data: Partial<IDevice>) => {
     try {
         const response = await DevicesService.UpdateDevices(id, data) 

@@ -14,9 +14,10 @@ import MovingDevicesModal from "../MovingDevicesModal/MovingDevicesModal"
 interface DevicesTableProps {
     subdivId?: number;
     departmentName?: string;
+    showUnallocatedOnly?: boolean;
   }
 
-const DevicesTable: React.FC<DevicesTableProps> = ({ subdivId, departmentName }) => {
+const DevicesTable: React.FC<DevicesTableProps> = ({ subdivId, departmentName, showUnallocatedOnly }) => {
     const { loading, error, device, refetchDevice } = useDevices()
     const [searchTerm, setSearchTerm] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
@@ -50,11 +51,13 @@ const DevicesTable: React.FC<DevicesTableProps> = ({ subdivId, departmentName })
                 : true;
             const isInSubdiv = subdivId ? device.subdiv_id === subdivId : true;
 
+            const isUnallocated = showUnallocatedOnly ? !device.subdiv_id : true;
+
             const isNotDeleted = device.device_status !== "Неактивен"
 
-            return matchesSearchTerm && matchesStatus && isNotDeleted && isInSubdiv && matchesDepartment
+            return matchesSearchTerm && matchesStatus && isNotDeleted && isInSubdiv && matchesDepartment && isUnallocated
         });
-    }, [device, searchTerm, statusFilter, subdivId, departmentName])
+    }, [device, searchTerm, statusFilter, subdivId, departmentName, showUnallocatedOnly])
 
     const closeMovingModal = () => {
         setMovingModal(false)
@@ -142,7 +145,6 @@ const DevicesTable: React.FC<DevicesTableProps> = ({ subdivId, departmentName })
                     <table className={styles.table}>
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Название</th>
                                 <th>Тип</th>
                                 <th>Инвентарный номер</th>
@@ -158,13 +160,12 @@ const DevicesTable: React.FC<DevicesTableProps> = ({ subdivId, departmentName })
                         <tbody>
                             {filteredDevices.map((device) => (
                                 <tr key={device.device_id}>
-                                    <td>{device.device_id}</td>
                                     <td>{device.device_name}</td>
                                     <td>{device.device_type_name}</td>
                                     <td>{device.device_inventory_number}</td>
                                     <td>{device.device_serial_number}</td>
                                     <td>{device.device_model || "—"}</td>
-                                    <td>{formatDate(device.device_date_commissioning) || "—"}</td>
+                                    <td>{device.device_date_commissioning ? formatDate(device.device_date_commissioning) : "—"}</td>
                                     <td>{device.device_status || "—"}</td>
                                     <td>{device.department_name ? `${device.department_name} (${device.subdiv_name})` : "—"}</td>
                                     <td>

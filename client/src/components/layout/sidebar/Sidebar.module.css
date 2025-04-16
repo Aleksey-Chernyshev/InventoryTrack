@@ -1,27 +1,26 @@
-/* Sidebar.css */
 .sidebar {
 	position: relative;
 	z-index: 10;
 	flex-shrink: 0;
-	width: 256px; /* Открытый сайдбар */
+	width: 200px;
 	transition: width 0.3s ease-in-out;
 }
 
 .closed {
-	width: 80px; /* Закрытый сайдбар */
+	width: 80px;
 }
 
 .sidebar_container {
 	height: 100%;
-	background-color: rgba(31, 41, 55, 0.5); /* bg-gray-800 bg-opacity-50 */
+	background-color: rgba(31, 41, 55, 0.5);
 	backdrop-filter: blur(8px);
 	padding: 1rem;
 	display: flex;
 	flex-direction: column;
-	border-right: 1px solid #374151; /* border-gray-700 */
+	border-right: 1px solid #374151;
 }
 
-/* Кнопка меню */
+
 .menu_button {
 	padding: 0.5rem;
 	border-radius: 9999px;
@@ -35,10 +34,9 @@
 }
 
 .menu_button:active {
-	transform: scale(0.9); /* Эффект нажатия */
+	transform: scale(0.9);
 }
 
-/* Навигация */
 .sidebar_nav {
 	margin-top: 2rem;
 	flex-grow: 1;
@@ -59,7 +57,6 @@
 	background-color: #374151;
 }
 
-/* Текст внутри Sidebar */
 .sidebar_text {
 	margin-left: 1rem;
 	white-space: nowrap;
@@ -71,4 +68,45 @@
 .closed .sidebar_text {
 	opacity: 0;
 	width: 0;
+}
+
+.link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.link .sidebar_item {
+	transition: background-color 0.3s, color 0.3s;
+}
+
+.link.active .sidebar_item {
+	background-color: var(--active-bg);
+	color: white;
+}
+
+.link.active .sidebar_item svg {
+	color: white !important;
+}
+
+.iconWrapper {
+	position: relative;
+	display: inline-block;
+}
+
+.badge {
+	position: absolute;
+	top: -6px;
+	right: -8px;
+	background-color: red;
+	color: white;
+	border-radius: 50%;
+	font-size: 0.65rem;
+	min-width: 16px;
+	height: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	padding: 0 4px;
+	z-index: 1;
 }

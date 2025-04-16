@@ -1,6 +1,96 @@
 const db = require("../db")
 
 class DevicesController {
+
+    async createDevice(req, res){
+        const {
+            device_name,
+            device_type_name,
+            device_inventory_number,
+            device_serial_number,
+            device_model,
+            printer_format,
+            printer_color,
+            printer_cartridge,
+            monoblock_os,
+            monoblock_cpu,
+            monoblock_cpu_frequency,
+            monoblock_ram
+          } = req.body;
+      
+          try {
+            // Получаем ID типа устройства
+            const typeResult = await db.query(
+              'SELECT device_type_id FROM device_types WHERE device_type_name = $1',
+              [device_type_name]
+            );
+      
+            if (typeResult.rows.length === 0) {
+              return res.status(400).json({ message: 'Неверный тип устройства' });
+            }
+      
+            const device_type_id = typeResult.rows[0].device_type_id;
+      
+            // Создаем основную запись в devices
+            const deviceResult = await db.query(
+              `INSERT INTO devices (
+                device_name,
+                device_type_id,
+                device_inventory_number,
+                device_serial_number,
+                device_model
+              ) VALUES ($1, $2, $3, $4, $5)
+              RETURNING device_id`,
+              [
+                device_name,
+                device_type_id,
+                device_inventory_number,
+                device_serial_number,
+                device_model
+              ]
+            );
+      
+            const device_id = deviceResult.rows[0].device_id;
+      
+            // Вставляем доп. поля в зависимости от типа
+            if (device_type_name === 'Принтер') {
+              await db.query(
+                `INSERT INTO printers (
+                  device_id,
+                  printer_format,
+                  printer_color,
+                  printer_cartridge
+                ) VALUES ($1, $2, $3, $4)`,
+                [device_id, printer_format, printer_color, printer_cartridge]
+              );
+            } else if (device_type_name === 'Моноблок') {
+              await db.query(
+                `INSERT INTO monoblocks (
+                  device_id,
+                  monoblock_os,
+                  monoblock_cpu,
+                  monoblock_cpu_frequency,
+                  monoblock_ram
+                ) VALUES ($1, $2, $3, $4, $5)`,
+                [
+                  device_id,
+                  monoblock_os,
+                  monoblock_cpu,
+                  monoblock_cpu_frequency,
+                  monoblock_ram
+                ]
+              );
+            }
+      
+            return res.status(201).json({ message: 'Устройство создано', device_id });
+          } catch (error) {
+            console.error('Ошибка при создании устройства:', error);
+            return res.status(500).json({ message: 'Ошибка сервера' });
+          }
+        
+    }
+
+
     async getDevices(req, res) {
         try {
             const devices = await db.query(`
