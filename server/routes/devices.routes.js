@@ -6,6 +6,7 @@ const DevicesController = require('../controller/devices.controller');
 router.get('/devices', DevicesController.getDevices)
 router.patch('/devices/:id/delete', DevicesController.deleteDevice)
 router.patch('/devices/:id', DevicesController.updateDevice)
+router.post('/devices', DevicesController.createDevice);
 
 
 

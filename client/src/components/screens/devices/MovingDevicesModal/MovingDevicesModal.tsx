@@ -40,33 +40,42 @@ const MovingDevicesModal: FC<MovingDevicesModalProps> = ({
   };
 
   const handleSaveChanges = async () => {
-    if (selectedMovingDevice && selectedDeptId !== null && selectedSubdivId !== null && selectedMovingDevice.from_department_id !== undefined) {
+    if (
+      selectedMovingDevice &&
+      selectedDeptId !== null &&
+      selectedSubdivId !== null &&
+      typeof selectedDeptId === 'number'
+    ) {
       try {
-        const user_id_raw = localStorage.getItem("user_id")
+        const user_id_raw = localStorage.getItem("user_id");
         const user_id = user_id_raw ? Number(user_id_raw) : null;
-
+    
         if (user_id === null) {
           console.error("user_id не найден в localStorage");
           return;
         }
+    
         await DevicesService.MoveDevice({
           device_id: selectedMovingDevice.device_id,
-          from_department_id: selectedMovingDevice.from_department_id,
+          from_department_id: selectedMovingDevice.from_department_id!,
           to_department_id: selectedDeptId,
           moved_by_user: user_id
         });
-        refetchDevice();
-        closeMovingModal(); 
-      } catch (error) {
-        console.error("Ошибка при перемещении устройства:", error);
-      }
+    
+
+            refetchDevice();
+            closeMovingModal(); 
+        } catch (error) {
+            console.error("Ошибка при перемещении устройства:", error);
+        }
     } else {
-      console.log("Пожалуйста, выберите подразделение и отдел.");
+        console.log("Пожалуйста, выберите подразделение и отдел.");
     }
-  };
+};
+
 
   return (
-    <Modal active={movingModal} onClose={closeMovingModal} style={{ width: "500px", height: "420px" }}>
+    <Modal active={movingModal} onClose={closeMovingModal} style={{ width: "500px", height: "500px" }}>
       <div className={styles.modalContent}>
         <h2 className={styles.modalTitle}>Выполним перемещение устройства</h2>
         <form className={styles.formContainer}>
