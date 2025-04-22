@@ -2,7 +2,7 @@
 	position: relative;
 	z-index: 10;
 	flex-shrink: 0;
-	width: 200px;
+	width: 300px;
 	transition: width 0.3s ease-in-out;
 }
 
@@ -110,3 +110,22 @@
 	padding: 0 4px;
 	z-index: 1;
 }
+
+.logout_button {
+	background-color: #374151;
+	color: white;
+	border: none;
+	border-radius: 9999px; 
+	padding: 1rem;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .logout_button:hover {
+	background-color: #4b5563;
+  }
+  
+  .logout_button:active {
+	transform: scale(0.97);
+  }
+  

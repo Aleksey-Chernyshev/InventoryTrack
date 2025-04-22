@@ -1,0 +1,19 @@
+.container {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+    z-index: 10;
+    background-color: #111827; 
+  }
+  
+  .main {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+
+  

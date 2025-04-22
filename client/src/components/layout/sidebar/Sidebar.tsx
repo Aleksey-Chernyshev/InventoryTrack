@@ -15,14 +15,14 @@ import { MdAddToQueue } from "react-icons/md";
 import { useDevices } from "../../../hooks/DevicesHooks/useDevices"
 
 const SIDEBAR_ITEMS = [
-	{ name: "Overview", color: "#6366f1", icon: GrOverview, path: "/dashboard" },          
-	{ name: "Devices", color: "#7C3AED", icon: TbDevicesPc, path: "/dashboard/devices" }, 
-	{ name: "CreateDevices", color: "#A855F7", icon: MdAddToQueue, path: "/dashboard/create-device" },
-	{ name: "UnallocatedDevices", color: "#EC4899", icon: TbDeviceIpadExclamation, path: "/dashboard/unallocated-device" },
-	{ name: "Users", color: "#F43F5E", icon: FaUsers, path: "/dashboard/users", adminOnly: true }, 
-	{ name: "Subdivisions", color: "#10B981", icon: LuBuilding2, path: "/dashboard/subdivisions" }, 
+	{ name: "Обзор", color: "#6366f1", icon: GrOverview, path: "/dashboard" },          
+	{ name: "Устройства", color: "#7C3AED", icon: TbDevicesPc, path: "/dashboard/devices" }, 
+	{ name: "Добавить устройство", color: "#A855F7", icon: MdAddToQueue, path: "/dashboard/create-device" },
+	{ name: "Нераспределенные устройства", color: "#EC4899", icon: TbDeviceIpadExclamation, path: "/dashboard/unallocated-device" },
+	{ name: "Пользователи", color: "#F43F5E", icon: FaUsers, path: "/dashboard/users", adminOnly: true }, 
+	{ name: "Подразделения", color: "#10B981", icon: LuBuilding2, path: "/dashboard/subdivisions" }, 
 	// { name: "Admin", color: "#06B6D4", icon: RiAdminFill, path: "/dashboard/admin", adminOnly: true },
-	{ name: "Settings", color: "#06B6D4", icon: IoSettingsOutline, path: "/settings" },
+	{ name: "Настройки", color: "#06B6D4", icon: IoSettingsOutline, path: "/dashboard/settings" },
 	
 ];
 interface SidebarProps {
@@ -61,7 +61,7 @@ interface SidebarProps {
   
 			{SIDEBAR_ITEMS.filter(item => !(item.adminOnly && role !== "admin")).map((item) => {
 				const isActive = location.pathname === item.path
-				const showUnallocatedBadge = item.name === "UnallocatedDevices" && unallocatedCount > 0
+				const showUnallocatedBadge = item.path === "/dashboard/unallocated-device" && unallocatedCount > 0
 				return (
 					<Link
 						key={item.path}
@@ -91,8 +91,9 @@ interface SidebarProps {
 			})}
 
 		  </nav>
-		  <button onClick={logout}>
-			<IoLogOutOutline size={20} />
+		  <button onClick={logout} className={classNames(styles.logout_button, styles.sidebar_item)}>
+			<IoLogOutOutline size={25} style={{ minWidth: "20px" }} />
+			<span className={styles.sidebar_text}>Выйти</span>
 		  </button>
 		</div>
 	  </div>

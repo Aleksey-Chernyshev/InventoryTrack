@@ -5,6 +5,8 @@ const SUBDIVISIONS_URL = `${DASHBOARD_URL}/subdivisions`
 const DEVICES_URL = `${DASHBOARD_URL}/devices`
 const MOVE_DEVICE_URL = `${DASHBOARD_URL}/moveDevice`
 const DEPARTMENTS_URL = `${DASHBOARD_URL}/departments`
+const PASSWORD_URL = `${DASHBOARD_URL}/password`
+const ACCOUNT_URL = `${DASHBOARD_URL}/account`
 
 const DashboardURL = {
     API_URL,
@@ -14,6 +16,8 @@ const DashboardURL = {
     DEVICES_URL,
     MOVE_DEVICE_URL,
     DEPARTMENTS_URL,
+    PASSWORD_URL,
+    ACCOUNT_URL,
 }
 
 export default DashboardURL

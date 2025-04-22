@@ -10,6 +10,7 @@ import DevicesPage from '../DevicesPage/DevicesPage'
 import SubdivDevicesPage from '../SubdivDevicesPage/SubdivDevicesPage'
 import AddDevicePage from '../AddDevicePage/AddDevicePage'
 import UnallocatedDevicesPage from '../UnallocatedDevicesPage/UnallocatedDevicesPage'
+import SettingsPage from '../SettingsPage/SettingsPage'
 
 interface Props {
   setAuth: (boolean: boolean, userRole: string | null) => void
@@ -31,6 +32,7 @@ const DashboardPage: React.FC<Props> = ({ setAuth, role, userName }) => {
             <Route path="/devices" element={<DevicesPage />} />
             <Route path="/create-device" element={<AddDevicePage />} />
             <Route path="/unallocated-device" element={<UnallocatedDevicesPage/>}/>
+            <Route path="/settings" element={<SettingsPage setAuth={setAuth}/>} />
             <Route path="/admin" element={role === "admin" ? <AdminPage /> : <div>Доступ запрещен</div>} />
           </Routes>
         </div>
