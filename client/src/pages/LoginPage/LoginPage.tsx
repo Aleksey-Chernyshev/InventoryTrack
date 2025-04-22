@@ -11,7 +11,7 @@ interface Props {
 
 const LoginPage: React.FC<Props> = ({ setAuth }) => {
 
-  const {email, setEmail, password, setPassword, handleLogin} = useAuth(setAuth)
+  const {email, setEmail, password, setPassword, handleLogin, authError, setAuthError} = useAuth(setAuth)
   const [emailError, setEmailError] = useState<string | null>(null)
 
   const validateEmail = (email: string) => {
@@ -60,8 +60,12 @@ const LoginPage: React.FC<Props> = ({ setAuth }) => {
               name="password"
               placeholder="Пароль"
               value={password}
-              onChange={e => setPassword(e.target.value)} 
+              onChange={e => {
+                setPassword(e.target.value)
+                if (authError) setAuthError(null)
+              }} 
             />
+            {authError && <p className={styles.error_text}>{authError}</p>}
             <button className={styles.btn_submit}>Войти</button>
           </form>
 

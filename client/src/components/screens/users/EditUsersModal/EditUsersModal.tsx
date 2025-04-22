@@ -39,8 +39,7 @@ const EditUsersModal: FC<EditUserModalProps> = ({
     if (!updatedUserData.name) newErrors.name = "Имя не может быть пустым";
     if (!updatedUserData.email) newErrors.email = "Email не может быть пустым";
     if (!validEmail) newErrors.email = "Некорректный формат email";
-    if (updatedUserData.password.length < 6) newErrors.password = "Пароль должен содержать минимум 6 символов";
-
+    
     setErrors(newErrors);
     
     // Если ошибок нет — форма валидна

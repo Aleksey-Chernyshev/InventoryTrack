@@ -69,6 +69,21 @@ CREATE TABLE device_location (
 );
 
 
+CREATE TABLE password_change_requests (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(user_id),
+  new_password TEXT NOT NULL,
+  status TEXT DEFAULT 'pending', 
+  created_at TIMESTAMP DEFAULT NOW()
+);
+CREATE TABLE account_deletion_requests (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(user_id),
+  status VARCHAR(20) DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
 INSERT INTO subdivisions (subdiv_name, subdiv_address, subdiv_position)
 VALUES 
 ('Транснефть-Верхняя Волга','Гранитный переулок, 4А, Нижний Новгород', ARRAY[56.314876338684925, 44.003520566551366]);

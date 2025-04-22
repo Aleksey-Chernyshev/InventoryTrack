@@ -10,6 +10,9 @@ const usersRoutes = require('./routes/users.routes')
 const devicesRoutes = require('./routes/devices.routes')
 const departmentsRoutes = require('./routes/departments.routes')
 const moveDeviceRoutes = require('./routes/moveDevice.routes')
+const passwordRoutes = require('./routes/password.routes')
+const accountRoutes = require('./routes/account.routes')
+
 
 dotenv.config();
 
@@ -26,6 +29,10 @@ app.use('/api/dashboard', usersRoutes);
 app.use('/api/dashboard', devicesRoutes);
 app.use('/api/dashboard', departmentsRoutes);
 app.use('/api/dashboard', moveDeviceRoutes);
+app.use('/api/dashboard', passwordRoutes);
+app.use('/api/dashboard', accountRoutes);
+
+
 
 const PORT = 5000;
 app.listen(PORT, () => {

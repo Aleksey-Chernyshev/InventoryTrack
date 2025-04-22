@@ -66,6 +66,17 @@ export const UserService ={
         } catch (error) {
             console.error("Ошибка при обновлении данных:", error)
         }
-    }
+    },
+
+    async GetProfile(token: string) {
+        try {
+          const response = await axios.get(AuthURL.PROFILE_URL, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          return response.data;
+        } catch (error) {
+          console.error("Ошибка при получении профиля:", error);
+        }
+      }
     
 }
