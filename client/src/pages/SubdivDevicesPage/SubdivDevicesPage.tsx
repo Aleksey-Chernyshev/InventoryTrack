@@ -30,7 +30,7 @@ const SubdivDevicesPage: React.FC = () => {
         <p>Загрузка отделов...</p>
       ) : departments.length > 0 && (
         <div className={styles.filterBox} style={{marginBottom:"25px"}}>
-          <label style={{fontSize:"30px"}}>Фильтр по отделу: </label>
+          <label style={{fontSize:"30px", color:"white"}}>Фильтр по отделу: </label>
           <select
             value={selectedDepartment}
             onChange={(e) => setSelectedDepartment(e.target.value)}

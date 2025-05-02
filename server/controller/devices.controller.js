@@ -19,7 +19,7 @@ class DevicesController {
           } = req.body;
       
           try {
-            // Получаем ID типа устройства
+
             const typeResult = await db.query(
               'SELECT device_type_id FROM device_types WHERE device_type_name = $1',
               [device_type_name]
@@ -31,7 +31,6 @@ class DevicesController {
       
             const device_type_id = typeResult.rows[0].device_type_id;
       
-            // Создаем основную запись в devices
             const deviceResult = await db.query(
               `INSERT INTO devices (
                 device_name,
@@ -52,7 +51,6 @@ class DevicesController {
       
             const device_id = deviceResult.rows[0].device_id;
       
-            // Вставляем доп. поля в зависимости от типа
             if (device_type_name === 'Принтер') {
               await db.query(
                 `INSERT INTO printers (
@@ -256,6 +254,60 @@ class DevicesController {
             return res.status(500).json({ message: 'Ошибка при удалении устройства' });
         }
     }
+
+
+    async getDevicesDistributionByType(req, res) {
+      try {
+        const result = await db.query(`
+          SELECT dt.device_type_name, COUNT(d.device_id) AS count
+          FROM device_types dt
+          LEFT JOIN devices d ON dt.device_type_id = d.device_type_id
+          GROUP BY dt.device_type_name
+        `);
+        res.json(result.rows);
+      } catch (error) {
+        console.error("Ошибка при получении распределения устройств по типам:", error);
+        res.status(500).json({ message: "Ошибка сервера" });
+      }
+    }
+    async getDevicesDistributionBySubdiv(req, res) {
+      try {
+        const result = await db.query(`
+          SELECT s.subdiv_name, COUNT(dl.device_id) AS total
+          FROM device_location dl
+          JOIN departments dpt ON dl.to_department_id = dpt.department_id
+          JOIN subdivisions s ON dpt.department_type = s.subdiv_id
+          GROUP BY s.subdiv_name
+          ORDER BY total DESC;
+        `);
+  
+        // Отправляем результат в ответе
+        return res.json(result.rows);
+      } catch (error) {
+        console.error("Error fetching devices distribution by subdiv:", error);
+        return res.status(500).json({ error: "Ошибка при получении данных." });
+      }
+    }
+
+    async getMoveDevices(req, res) {
+      try {
+        const result = await db.query(`
+          SELECT 
+              DATE(moved_at) AS date,
+              COUNT(*) AS moves
+          FROM device_location
+          GROUP BY date
+          ORDER BY date ASC
+        `);
+  
+        return res.json(result.rows);
+      } catch (error) {
+        console.error("Error fetching move devices:", error);
+        return res.status(500).json({ error: "Ошибка при получении данных." });
+      }
+    }
+
+    
 }
 
 module.exports = new DevicesController()
