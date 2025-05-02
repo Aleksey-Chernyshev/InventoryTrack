@@ -65,5 +65,33 @@ export const DevicesService = {
             console.log("Ошибка при перемещении устройства:", error);
             throw error;
         }
+    },
+
+    async GetDevicesDistributionByType() {
+        try {
+            const response = await axios.get(`${DashboardURL.DEVICES_URL}/by-type`);
+            return response.data;
+        } catch (error) {
+            console.error("Ошибка при получении распределения устройств по типам:", error);
+            throw error;
+        }
+    },
+    async GetDevicesDistributionBySubdiv() {
+        try {
+            const response = await axios.get(`${DashboardURL.DEVICES_URL}/by-subdiv`);
+            return response.data;
+        } catch (error) {
+            console.error("Ошибка при получении распределения устройств по типам:", error);
+            throw error;
+        }
+    },
+    async GetMoveDevices() {
+        try {
+            const response = await axios.get(`${DashboardURL.DEVICES_URL}/move`);
+            return response.data;
+        } catch (error) {
+            console.error("Ошибка при получении:", error);
+            throw error;
+        }
     }
 }
